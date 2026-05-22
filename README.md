@@ -56,6 +56,8 @@ The login structure we will use in our examples is straightforward. It contains 
 
 If error faced in registration follow the following steps in metasploitable 2:
 
+<img width="1918" height="1008" alt="image" src="https://github.com/user-attachments/assets/61cd3221-4d72-448a-ad1d-990f7bb13bb7" />
+
 
 This issue is caused by a misconfiguration in the config.inc located in the /var/www/mutillidae folder on Metasploitable 2 VM.
 
@@ -66,13 +68,17 @@ sudo nano /var/www/mutillidae/config.inc
 Type msfadmin when prompted for the root password. 
 Once nano opens config.inc file, look for the line $dbname = ‘metasploit’ as shown in Figure  below:
 ##  OUTPUT
-<img width="959" height="504" alt="Screenshot 2026-05-21 225654" src="https://github.com/user-attachments/assets/a7dc430c-ce8d-4b37-b116-f97760d9ee9e" />
+
+<img width="940" height="526" alt="image" src="https://github.com/user-attachments/assets/69f59f2d-d2c8-46d3-947f-a6d79c956088" />
 
 
 Replace ‘metasploit’ with ‘owasp10’ and make sure the lines end with semicolon ; as shown in Figure
 ##  OUTPUT
 
+<img width="525" height="294" alt="Screenshot 2026-05-21 231347" src="https://github.com/user-attachments/assets/dcfae209-d7d4-4e8a-a38a-3e79f506eb36" />
 
+
+<img width="418" height="302" alt="Screenshot 2026-05-21 231603" src="https://github.com/user-attachments/assets/138e6f17-7cdc-47dd-8b8b-d282e0384754" />
 
 
 
@@ -83,32 +89,23 @@ To restart Apache, type the following command in the terminal. Alternatively, yo
 sudo /etc/init.d/apache2 reload
 ##  OUTPUT
 
-
-
-
-# Reset Mutillidae database
-Refresh the page then clicking on the Reset DB menu option to reset the Mutillidae database [Figure ]. Click OK when prompted.
-##  OUTPUT
-
-
-
+<img width="521" height="169" alt="Screenshot 2026-05-21 232209" src="https://github.com/user-attachments/assets/4a18a283-6a2f-4125-8934-a74c054dc34a" />
 
 
 # Test the new configuration
 Alright. Now is time to test if we managed to fix the database issue. Go ahead and register a new account on the Mutillidae webpage.
 
  The Mutillidae database error no longer appears 
-#OUTPUT
+## OUTPUT
 
+<img width="959" height="505" alt="Screenshot 2026-05-21 232344" src="https://github.com/user-attachments/assets/9a6ef89d-d265-4d2a-888b-77c63898f8dd" />
 
-
-Now after logging out you will see the login page. In the login page give ganesh’ # (myusername). You can see the page now enters into the administrator page as before when giving the password.
-#OUTPUT
 
 
 Click the login button and you will see it enter into the administrator page.
-#OUTPUT
+## OUTPUT
 
+<img width="959" height="438" alt="Screenshot 2026-05-21 232454" src="https://github.com/user-attachments/assets/0d10a63d-8cae-4a0c-a566-45a916c902dd" />
 
 
 ## Union-based SQL injection
@@ -116,58 +113,23 @@ Click the login button and you will see it enter into the administrator page.
 UNION-based SQL injection assaults enable the analyzer to extract data from the database effectively. Since the “UNION” operator must be utilized if the two inquiries have precisely the same structure, the attacker must craft a “SELECT” statement like the first inquiry. 
 we will be using the “User Info” page from Mutillidae to perform a Union-Based SQL injection attack. Go to “OWASP Top 10/A1 — Injection/SQLi — Extract-Data/User Info” 
 
-After logging out, Now choose the menu as shown below:
-##  OUTPUT
-
-
-
 From this point, all our attack vectors will be performed in the URL section of the page using the Union-Based technique.There are two different ways to discover how many columns are selected by the original query. The first is to infuse an “ORDER BY” statement indicating a column number. Given the column number specified is higher than the number of columns in the “SELECT” statement, an error will be returned.
 ##  OUTPUT
 
-
-
-Since we do not know the number of columns, we start at 1. To find the exact amount of columns, the number is incremented until an error related to the “ORDER BY” clause is returned. In this example, we incremented it to 6 and received an error message, so it means that the number of columns is lower than 6.
-
-The browser url of this info page need to be modified with the url as below:
-##  OUTPUT
-
+<img width="824" height="416" alt="Screenshot 2026-05-21 234006" src="https://github.com/user-attachments/assets/a6d5c2fd-ff8c-4043-a84d-fe9912bf8535" />
 
 
 
 After adding the order by 6 into the existing url , the following error statement will be obtained:
 ##  OUTPUT
 
-
-
-
-When we ordered by 5, it worked and displayed some information. It means there are five columns that we can work with. Following screenshot shows that the url modified to have statement added with ordered by 5 replacing 6.
-#OUTPUT
-
-
-
-
- As it is having 5 columns the query worked fine and it provides the correct result
-##  OUTPUT
-
-
-
-
-Instead of using the "order by" option, let’s use the "union select" option and provide all five columns. Ex: (union select 1,2,3,4,5).
-##  OUTPUT
-
-
-
-As given in the screenshot below columns 2,3,4 are usable in which we can substitute any sql commands to extract necessary information.
-##  OUTPUT
-
-
-
-
+<img width="824" height="416" alt="Screenshot 2026-05-21 234006" src="https://github.com/user-attachments/assets/a5980474-73a6-4984-8ec3-86ef155a7ce9" />
 
 
 Now we will substitute some few commands like database(), user(), version() to obtain the information regarding the database name, username and version of the database.
 ##  OUTPUT
 
+<img width="1399" height="133" alt="image" src="https://github.com/user-attachments/assets/b2adc3b6-cf85-47df-9a75-fc7eb69712f7" />
 
 
 The url when executed, we obtain the necessary information about the database name owasp10, username as root@localhost and version as 5.0.51a-3ubuntu5.
@@ -177,6 +139,7 @@ Replace the query in the url with the following one:
 union select 1,table_name,null,null,5 from information_schema.tables where table_schema = ‘owasp10’
 ##  OUTPUT
 
+<img width="608" height="53" alt="Screenshot 2026-05-21 234903" src="https://github.com/user-attachments/assets/2c58ea7d-6918-4ba0-b93e-faa852eac49b" />
 
 
 
@@ -192,15 +155,12 @@ Ex: (union select 1,colunm_name,null,null,5 from information_schema.columns wher
 Here we are trying to extract column names from the “accounts” table.
 ##  OUTPUT
 
+<img width="608" height="53" alt="Screenshot 2026-05-21 234903" src="https://github.com/user-attachments/assets/b483370e-7d24-4273-a0b4-af71c488232b" />
 
 
 The column names of the accounts is displayed below for the following url:
 
-
-Once we discovered all available column names, we can extract information from them by just adding those column names in our query sentence.
-
-Ex: (union select 1,username,password,is_admin,5 from accounts).
-##  OUTPUT
+<img width="512" height="334" alt="image" src="https://github.com/user-attachments/assets/10f9a557-7430-428c-966e-378cb74b76c2" />
 
 
 
@@ -211,6 +171,8 @@ Ex: (union select null,load_file(‘/etc/passwd’),null,null,null).
 
 
 ##  OUTPUT
+
+<img width="512" height="341" alt="image" src="https://github.com/user-attachments/assets/3d9a2fae-2597-4caf-a107-4bd7b83c5008" />
 
 
 ## RESULT:
