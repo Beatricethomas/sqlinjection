@@ -28,38 +28,30 @@ Identify IP address using ifconfig in Metasploitable2
 Use the above ip address to access the apache webserver of Metasploitable2 from kali/parrot linux. In Kali Linux use the ip address in a web browser.
 ##  OUTPUT
 
-
-Select Multidae from the menu listed as shown above. The page is displayed as below:
-##  OUTPUT
-
+<img width="955" height="539" alt="Screenshot 2026-05-21 222221" src="https://github.com/user-attachments/assets/5e83427a-674e-4d29-b188-1d745a1ccc29" />
 
 
 Click on the menu Login/Register and register for an account
 ##  OUTPUT
 
 
+<img width="959" height="475" alt="Screenshot 2026-05-21 224901" src="https://github.com/user-attachments/assets/23b06fad-9e16-48aa-a82b-bda8167bd049" />
+
+
 
 Click on the link “Please register here”
 ##  OUTPUT
 
+<img width="959" height="506" alt="Screenshot 2026-05-21 225340" src="https://github.com/user-attachments/assets/f1678dcc-eb1d-422c-890a-6f2d5053a364" />
 
 
 Click on “Create Account” to display the following page:
 ##  OUTPUT
 
+<img width="959" height="509" alt="Screenshot 2026-05-21 225548" src="https://github.com/user-attachments/assets/e1db226a-9960-47cc-91c6-721b3bbc54ff" />
+
 
 The login structure we will use in our examples is straightforward. It contains two input fields (username and password), which are both vulnerable. The back-end content creates a query to approve the username and secret key given by the client. Here is an outline of the page rationale:
-
-
-($query = “SELECT * FROM users WHERE username=’$_POST[username]’ AND password=’$_POST[password]’“;).
- For the username put “ganesh” or “anything” and for the password put (anything’ or ‘1’=’1) or (admin’ or ‘1’=’1) then try to log in, and you’ll be presented with an admin login page.
-##  OUTPUT
-
-
-
-Click “Login”. The logged in page will show as below:
-##  OUTPUT
-
 
 
 If error faced in registration follow the following steps in metasploitable 2:
@@ -74,10 +66,12 @@ sudo nano /var/www/mutillidae/config.inc
 Type msfadmin when prompted for the root password. 
 Once nano opens config.inc file, look for the line $dbname = ‘metasploit’ as shown in Figure  below:
 ##  OUTPUT
+<img width="959" height="504" alt="Screenshot 2026-05-21 225654" src="https://github.com/user-attachments/assets/a7dc430c-ce8d-4b37-b116-f97760d9ee9e" />
 
 
 Replace ‘metasploit’ with ‘owasp10’ and make sure the lines end with semicolon ; as shown in Figure
 ##  OUTPUT
+
 
 
 
